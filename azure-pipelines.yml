@@ -29,7 +29,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'PDFTronNetAutomation/inputFiles'
+    SourceFolder: 'inputFiles'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/inputFiles'
     OverWrite: true
