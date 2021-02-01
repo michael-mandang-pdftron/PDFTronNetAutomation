@@ -28,7 +28,18 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'root/inputFiles'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/inputFiles'
+    OverWrite: true
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'root/PDFTronNetAutomation/bin/debug'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/dll'
 
 # - task: VSTest@2
 #   inputs:
