@@ -27,19 +27,54 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: PowerShell@2
+  inputs:
+    filePath: '$(System.DefaultWorkingDirectory)'
+    arguments: 'New-Item -ItemType Directory -Force -Path C:\AutomationFiles\PDFTron\InputFiles'
+    failOnStderr: true
+
+- task: PowerShell@2
+  inputs:
+    filePath: '$(System.DefaultWorkingDirectory)'
+    arguments: 'New-Item -ItemType Directory -Force -Path C:\AutomationFiles\PDFTron\PDF2Text'
+    failOnStderr: true
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'inputFiles'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/inputFiles'
+    TargetFolder: 'C:\AutomationFiles\PDFTron\InputFiles'
     OverWrite: true
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'PDFTronNetAutomation/bin/debug'
+    SourceFolder: 'PDFTronNetAutomation/PDF2Text'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/dll'
+    TargetFolder: 'C:\AutomationFiles\PDFTron\PDF2Text'
     OverWrite: true
+    
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*automation*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testFiltercriteria: 'Name=SimpleCheckTest'
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: 'inputFiles'
+#     Contents: '**'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)/inputFiles'
+#     OverWrite: true
+
+# - task: CopyFiles@2
+#   inputs:
+#     SourceFolder: 'PDFTronNetAutomation/bin/debug'
+#     Contents: '**'
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)/dll'
+#     OverWrite: true
     
 
 # - task: VSTest@2
@@ -47,8 +82,8 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'drop'
+#     publishLocation: 'Container'
