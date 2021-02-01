@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'debug'
+  root: '$(Build.SourcesDirectory)'
 
 steps:
 # - task: NuGetToolInstaller@1
@@ -26,6 +27,8 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+
 
 # - task: VSTest@2
 #   inputs:
