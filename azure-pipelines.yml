@@ -13,7 +13,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'debug'
-  root: '$(Build.SourcesDirectory)'
 
 steps:
 # - task: NuGetToolInstaller@1
@@ -30,16 +29,18 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'root/inputFiles'
+    SourceFolder: 'PDFTronNetAutomation/inputFiles'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/inputFiles'
     OverWrite: true
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'root/PDFTronNetAutomation/bin/debug'
+    SourceFolder: 'PDFTronNetAutomation/bin/debug'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/dll'
+    OverWrite: true
+    
 
 # - task: VSTest@2
 #   inputs:
